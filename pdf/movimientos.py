@@ -53,14 +53,14 @@ def obtener_movimientos(texto):
             debito = monto
             credito = 0
 
-    movimiento = Movimiento(
-        fecha=fecha,
-        descripcion=descripcion,
-        debito=debito,
-        credito=credito,
-        balance=balance,
-)
+        movimiento = Movimiento(
+            fecha=fecha,
+            descripcion=descripcion,
+            debito=debito,
+            credito=credito,
+            balance=balance,
+        )
 
-    movimientos.append(movimiento)
+        movimientos.append(movimiento)
 
     return movimientos

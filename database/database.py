@@ -15,6 +15,7 @@ def conectar():
 
     return conexion
 
+
 def crear_tablas():
 
     conexion = conectar()
@@ -61,5 +62,17 @@ def crear_tablas():
     """)
 
     conexion.commit()
+    conexion.close()
 
+
+def limpiar_tablas():
+
+    conexion = conectar()
+
+    cursor = conexion.cursor()
+
+    cursor.execute("DELETE FROM movimientos")
+    cursor.execute("DELETE FROM cuentas")
+
+    conexion.commit()
     conexion.close()
