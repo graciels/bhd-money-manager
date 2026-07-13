@@ -15,33 +15,52 @@ def obtener_movimientos(texto):
         if not re.match(r"\d{2}/\d{2}", linea):
             continue
 
+        print(linea)
+
         partes = linea.split()
 
-        fecha = datetime.strptime(
-    f"2026/{partes[0]}",
-    "%Y/%d/%m"
-).date()
+        try:
 
-        referencia = partes[1]
+            fecha = datetime.strptime(
+                f"2026/{partes[0]}",
+                "%Y/%d/%m"
+            ).date()
 
-        balance = float(
-            partes[-1].replace(",", "")
-        )
+            balance = float(
+                partes[-1].replace(",", "")
+            )
 
-        monto = float(
-            partes[-2].replace(",", "")
-        )
+            monto = float(
+                partes[-2].replace(",", "")
+            )
 
-        descripcion = " ".join(partes[2:-2])
+        except:
 
-        movimiento = Movimiento(
-            fecha=fecha,
-            descripcion=descripcion,
-            debito=monto,
-            credito=0,
-            balance=balance,
-        )
+            continue
 
-        movimientos.append(movimiento)
+        descripcion = " ".join(partes[1:-2])
+        descripcion_mayus = descripcion.upper()
+
+        if (
+            "CREDITO" in descripcion_mayus
+            or "TRANSFERENCIA RECIBIDA" in descripcion_mayus
+            or "DEPOSITO" in descripcion_mayus
+            or "PAGO INTERESES" in descripcion_mayus
+        ):
+            debito = 0
+            credito = monto
+        else:
+            debito = monto
+            credito = 0
+
+    movimiento = Movimiento(
+        fecha=fecha,
+        descripcion=descripcion,
+        debito=debito,
+        credito=credito,
+        balance=balance,
+)
+
+    movimientos.append(movimiento)
 
     return movimientos

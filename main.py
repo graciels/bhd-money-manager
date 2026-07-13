@@ -1,8 +1,11 @@
 from services.preparar_pdfs import preparar_pdfs
 from services.procesar_estados import procesar_estados
+from database.database import crear_tablas
 
 
 def main():
+
+    crear_tablas()
 
     preparar_pdfs()
 
