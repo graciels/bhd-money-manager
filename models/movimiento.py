@@ -9,10 +9,12 @@ class Movimiento:
 
     descripcion: str
 
-    debito: float
+    comercio: str = ""
 
-    credito: float
+    debito: float = 0
 
-    balance: float
+    credito: float = 0
+
+    balance: float = 0
 
     categoria: str = ""

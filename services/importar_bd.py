@@ -1,4 +1,5 @@
 from database.database import conectar
+from categorias.clasificador import clasificar
 
 
 def guardar_cuenta(cuenta, titular):
@@ -41,16 +42,19 @@ def guardar_movimientos(cuenta_id, movimientos):
     for movimiento in movimientos:
 
         datos.append(
-            (
-                cuenta_id,
-                movimiento.fecha.isoformat(),
-                movimiento.descripcion,
-                movimiento.debito,
-                movimiento.credito,
-                movimiento.balance,
-                None,   # categoría (por ahora)
-            )
-        )
+    (
+        cuenta_id,
+        movimiento.fecha.isoformat(),
+        movimiento.descripcion,
+        movimiento.comercio,
+        movimiento.debito,
+        movimiento.credito,
+        movimiento.balance,
+        clasificar(
+            movimiento.descripcion
+        ),
+    )
+)
 
     print("Insertando", len(datos), "movimientos")     
 
@@ -60,12 +64,13 @@ def guardar_movimientos(cuenta_id, movimientos):
             cuenta_id,
             fecha,
             descripcion,
+            comercio,
             debito,
             credito,
             balance,
             categoria
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """,
         datos,
     )

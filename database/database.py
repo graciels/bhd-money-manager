@@ -46,6 +46,8 @@ def crear_tablas():
             fecha TEXT NOT NULL,
 
             descripcion TEXT NOT NULL,
+            
+            comercio TEXT,
 
             debito REAL NOT NULL,
 

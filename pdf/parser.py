@@ -37,19 +37,18 @@ def leer_estado(ruta_pdf):
     
     balance_inicial, balance_final = obtener_balances(texto)
 
+    fecha_corte = obtener_fecha_corte(texto)
+
     estado = EstadoCuenta(
-
-    titular=obtener_titular(texto),
-
-    fecha_corte=obtener_fecha_corte(texto),
-
-    balance_inicial=balance_inicial,
-
-    balance_final=balance_final,
-
-    cuenta=cuenta,
-
-    movimientos=obtener_movimientos(texto),
-)
+        titular=obtener_titular(texto),
+        fecha_corte=obtener_fecha_corte(texto),
+        balance_inicial=balance_inicial,
+        balance_final=balance_final,
+        cuenta=cuenta,
+        movimientos=obtener_movimientos(
+            texto,
+            fecha_corte,
+        ),
+    )
 
     return estado
