@@ -1,6 +1,7 @@
 from services.preparar_pdfs import preparar_pdfs
 from services.procesar_estados import procesar_estados
 from database.database import crear_tablas
+from services.guardar_estados import guardar_estado
 
 from services.importar_bd import (
     guardar_cuenta,
@@ -34,6 +35,11 @@ def main():
             estado.cuenta,
             estado.titular,
         )
+
+        guardar_estado(
+        cuenta_id,
+        estado,
+)   
 
         guardar_movimientos(
             cuenta_id,

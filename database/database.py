@@ -27,7 +27,7 @@ def crear_tablas():
 
             id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-            numero TEXT NOT NULL,
+            numero TEXT NOT NULL UNIQUE,
 
             moneda TEXT NOT NULL,
 
@@ -35,6 +35,26 @@ def crear_tablas():
 
         )
     """)
+
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS estados (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        cuenta_id INTEGER NOT NULL,
+
+        fecha_corte TEXT NOT NULL,
+
+        balance_inicial REAL NOT NULL,
+
+        balance_final REAL NOT NULL,
+
+        FOREIGN KEY (cuenta_id)
+            REFERENCES cuentas(id)
+
+    )
+""")
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS movimientos (

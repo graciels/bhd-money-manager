@@ -8,12 +8,35 @@ def guardar_cuenta(cuenta, titular):
 
     cursor = conexion.cursor()
 
+    # Buscar si la cuenta ya existe
+    cursor.execute(
+        """
+        SELECT id
+        FROM cuentas
+        WHERE numero = ?
+        """,
+        (cuenta.numero,),
+    )
+
+    fila = cursor.fetchone()
+
+    if fila:
+
+        conexion.close()
+
+        return fila["id"]
+
+    # Si no existe, crearla
     cursor.execute(
         """
         INSERT INTO cuentas (
+
             numero,
+
             moneda,
+
             titular
+
         )
         VALUES (?, ?, ?)
         """,
@@ -27,6 +50,7 @@ def guardar_cuenta(cuenta, titular):
     cuenta_id = cursor.lastrowid
 
     conexion.commit()
+
     conexion.close()
 
     return cuenta_id
